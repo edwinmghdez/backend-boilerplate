@@ -1,0 +1,6 @@
+# Compiled Output
+/node_modules
+/dist
+
+# Development
+.env
