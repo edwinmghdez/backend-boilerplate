@@ -1,10 +1,13 @@
-import { plainToInstance } from 'class-transformer';
+import { ClassTransformOptions, plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { Request, Response, NextFunction } from 'express';
 
 export function validateMiddleware(dto: any): (req: Request, res: Response, next: NextFunction) => void {
   return (req, res, next) => {
-    const dtoInstance = plainToInstance(dto, req.body);
+    const transformOptions: ClassTransformOptions = {
+      excludeExtraneousValues: true,
+    };
+    const dtoInstance = plainToInstance(dto, req.body, transformOptions);
     validate(dtoInstance).then((errors: ValidationError[]) => {
       if (errors.length > 0) {
         const formattedErrors = formatValidationErrors(errors);

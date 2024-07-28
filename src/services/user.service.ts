@@ -6,6 +6,7 @@ import { mapToUserDto } from "../dtos/User/user-dto-mapping";
 import { UserPaginatedResponseDto } from "../dtos/User/user-paginated-response.dto";
 import { UserDto } from "../dtos/User/user.dto";
 import { CreateUserDto } from "../dtos/User/create-user.dto";
+import { UpdateUserDto } from "../dtos/User/update-user.dto";
 
 export class UserService
 {
@@ -35,11 +36,11 @@ export class UserService
         return mapToUserDto(user);
     }
 
-    public static async update(id: User['id'], payload: Partial<User>): Promise<UserDto>
+    public static async update(id: User['id'], payload: Partial<UpdateUserDto>): Promise<UserDto>
     {
         const user = await this.userRepository.findOneByOrFail({id});
 
-        const data: Partial<User> = {
+        const data: Partial<UpdateUserDto> = {
             ...user,
             ...payload
         }
