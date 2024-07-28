@@ -1,4 +1,3 @@
-import { DeepPartial } from "typeorm";
 import { AppDataSource } from "../db/data-source";
 import { User } from "../entities/user.entity";
 import { buildFindManyOptions } from "../utils/query-options-builder";
@@ -6,6 +5,7 @@ import { makePagination } from "../utils/pagination";
 import { mapToUserDto } from "../dtos/User/user-dto-mapping";
 import { UserPaginatedResponseDto } from "../dtos/User/user-paginated-response.dto";
 import { UserDto } from "../dtos/User/user.dto";
+import { CreateUserDto } from "../dtos/User/create-user.dto";
 
 export class UserService
 {
@@ -14,9 +14,7 @@ export class UserService
     public static async getAllPaginated(queryParams: any): Promise<UserPaginatedResponseDto>
     {
         const [users, totalItems] = await this.userRepository.findAndCount(
-            buildFindManyOptions({
-                queryParams
-            })
+            buildFindManyOptions({ queryParams })
         );
 
         const data = users.map((user) => mapToUserDto(user));
@@ -30,7 +28,7 @@ export class UserService
         return mapToUserDto(user);
     }
 
-    public static async create(payload: DeepPartial<User>): Promise<UserDto>
+    public static async create(payload: CreateUserDto): Promise<UserDto>
     {
         const data = this.userRepository.create(payload);
         const user = await this.userRepository.save(data);
