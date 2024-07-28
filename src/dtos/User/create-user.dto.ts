@@ -1,7 +1,9 @@
+import { Expose } from "class-transformer"
 import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator"
 
 export class CreateUserDto
 {
+    @Expose()
     @IsNotEmpty({
         message: 'The first name should not be empty'
     })
@@ -13,6 +15,7 @@ export class CreateUserDto
     })
     first_name: string
 
+    @Expose()
     @IsNotEmpty({
         message: 'The last name should not be empty'
     })
@@ -24,12 +27,14 @@ export class CreateUserDto
     })
     last_name: string
 
+    @Expose()
     @IsNotEmpty({
         message: 'The email should not be empty'
     })
     @IsEmail()
     email: string
 
+    @Expose()
     @IsNotEmpty({
         message: 'The password should not be empty'
     })
