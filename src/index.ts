@@ -1,6 +1,6 @@
 import { AppDataSource } from "./db/data-source";
 import express from "express";
-import { userRouter } from "./routes";
+import { authRouter, userRouter } from "./routes";
 import { errorHandler } from "./middlewares/error-handler.middleware";
 
 AppDataSource.initialize().then(async () => {
@@ -9,6 +9,7 @@ AppDataSource.initialize().then(async () => {
     app.use(express.json());
 
     app.use('/api/v1/users', userRouter);
+    app.use('/api/auth', authRouter);
 
     app.use(errorHandler);
 

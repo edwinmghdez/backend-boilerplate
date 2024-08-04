@@ -7,6 +7,7 @@ import { UserPaginatedResponseDto } from "../dtos/User/user-paginated-response.d
 import { UserDto } from "../dtos/User/user.dto";
 import { CreateUserDto } from "../dtos/User/create-user.dto";
 import { UpdateUserDto } from "../dtos/User/update-user.dto";
+import { BcryptHelper } from "../helpers/bcrypt.helper";
 
 export class UserService
 {
@@ -31,6 +32,7 @@ export class UserService
 
     public static async create(payload: CreateUserDto): Promise<UserDto>
     {
+        payload.password = await BcryptHelper.encryptPassword(payload.password);
         const data = this.userRepository.create(payload);
         const user = await this.userRepository.save(data);
         return mapToUserDto(user);
