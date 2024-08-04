@@ -1,4 +1,4 @@
-import { filtersFields } from "../config/constants";
+import { filtersFields } from "../config/constants.config";
 import { PaginationDto } from "../dtos/pagination.dto";
 
 export const makePagination = (
