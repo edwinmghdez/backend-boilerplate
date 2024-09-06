@@ -8,7 +8,6 @@ import { jwtConfig } from "../config/jwt.config";
 import { JwtHelper } from "../helpers/jwt.helper";
 import { BcryptHelper } from "../helpers/bcrypt.helper";
 import { redis } from "../config/redis.config";
-import { Jwt, JwtPayload } from "jsonwebtoken";
 
 export class AuthService
 {

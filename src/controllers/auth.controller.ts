@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
+import { JwtHelper } from "../helpers/jwt.helper";
 
 export class AuthController
 {
@@ -28,12 +29,10 @@ export class AuthController
     }
 
     // POST api/auth/logout
-    public static async logout(req: any, res: Response, next: NextFunction)
+    public static async logout(req: Request, res: Response, next: NextFunction)
     {
         try {
-            const header = req.headers.authorization;
-
-            const token = header.split(" ")[1];
+            const token = JwtHelper.getToken(req);
             await AuthService.logout(token);
             return res.status(200).json({ message: "Logout successful" });
         } catch (error) {
@@ -42,12 +41,10 @@ export class AuthController
     }
 
     // GET api/auth/refresh
-    public static async refresh(req: any, res: Response, next: NextFunction)
+    public static async refresh(req: Request, res: Response, next: NextFunction)
     {
         try {
-            const header = req.headers.authorization;
-
-            const token = header.split(" ")[1];
+            const token = JwtHelper.getToken(req);
             const user = await AuthService.refresh(token);
             return res.status(200).json(user);
         } catch (error) {
